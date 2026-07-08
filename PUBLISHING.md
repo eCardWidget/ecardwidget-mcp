@@ -35,5 +35,17 @@ mcp-publisher publish          # reads server.json
 
 ## Verify
 
-After publishing, `npx -y @ecardwidget/mcp` (with `ECW_API_KEY` set) should start and connect. The server
+After publishing, `npx -y ecardwidget-mcp` (with `ECW_API_KEY` set) should start and connect. The server
 then appears in registry-backed clients' server lists.
+
+## 3. Claude Desktop extension (.mcpb)
+
+The one-click desktop install. `mcpb/manifest.json` declares a `user_config.api_key` (sensitive), so Claude
+Desktop shows an install dialog that prompts for the key and stores it in the OS keychain.
+
+```bash
+npm run pack:mcpb    # bundles a self-contained server (tsup.mcpb.config.ts) + packs ecardwidget-mcp.mcpb
+```
+
+Then attach `ecardwidget-mcp.mcpb` to the matching GitHub release. The `.mcpb` is a build artifact — it's
+gitignored, not committed. Bump the version in `mcpb/manifest.json` alongside `package.json`/`server.json`.

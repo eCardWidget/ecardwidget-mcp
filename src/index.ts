@@ -2,6 +2,8 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { EcwClient } from "./client.js";
 import { buildServer, SERVER_NAME, SERVER_VERSION } from "./server.js";
 import { EcwApiError } from "./types.js";
+import { loadConfig } from "./config.js";
+import { runLogin, runLogout } from "./login.js";
 
 const DEFAULT_BASE_URL = "https://app.ecardwidget.com";
 
@@ -14,13 +16,25 @@ const DEFAULT_BASE_URL = "https://app.ecardwidget.com";
  * never be polluted. The API key is never printed.
  */
 async function main(): Promise<void> {
-  const apiKey = process.env.ECW_API_KEY?.trim();
-  const baseUrl = (process.env.ECW_BASE_URL?.trim() || DEFAULT_BASE_URL).replace(/\/+$/, "");
+  // CLI subcommands (run in a normal terminal, not by an MCP client).
+  const sub = process.argv[2];
+  if (sub === "login") {
+    process.exit(await runLogin());
+  }
+  if (sub === "logout") {
+    process.exit(runLogout());
+  }
+
+  // Server mode. Key/baseURL resolve from env first, then the saved `login` config.
+  const stored = loadConfig();
+  const apiKey = process.env.ECW_API_KEY?.trim() || stored.apiKey?.trim();
+  const baseUrl = (process.env.ECW_BASE_URL?.trim() || stored.baseUrl?.trim() || DEFAULT_BASE_URL).replace(/\/+$/, "");
 
   if (!apiKey) {
     console.error(
-      "[ecardwidget-mcp] Missing ECW_API_KEY. Generate a scoped API key in your dashboard " +
-        "(Settings → Developers → API Keys) and set it as the ECW_API_KEY environment variable.",
+      "[ecardwidget-mcp] No API key found. Either run `npx ecardwidget-mcp login` to sign in once, " +
+        "or set the ECW_API_KEY environment variable. Generate a scoped key in your dashboard " +
+        "(Settings → Developers → API Keys).",
     );
     process.exit(1);
   }

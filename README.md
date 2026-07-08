@@ -13,29 +13,40 @@ campaigns/widgets/automations — using an **API key you generate and scope your
 
 ## Quick start
 
-1. **Generate a scoped API key** — in your eCardWidget dashboard: **Settings → Developers → API Keys**.
-   Grant only the areas you want the assistant to touch.
-2. **Add it to your MCP client:**
+First, **generate a scoped API key** in your eCardWidget dashboard: **Settings → Developers → API Keys**.
+Grant only the areas you want the assistant to touch. Then pick whichever install fits your client:
 
-   ```json
-   {
-     "mcpServers": {
-       "ecardwidget": {
-         "command": "npx",
-         "args": ["-y", "ecardwidget-mcp"],
-         "env": { "ECW_API_KEY": "YOUR_API_KEY" }
-       }
-     }
-   }
-   ```
+### Option A — Claude Desktop (one click)
 
-   Or with the Claude Code CLI:
+Download `ecardwidget-mcp.mcpb` from the [latest release](https://github.com/eCardWidget/ecardwidget-mcp/releases)
+and open it. Claude Desktop shows an install dialog that **asks you for your API key** (stored in your OS
+keychain) — no config files, no commands.
 
-   ```bash
-   claude mcp add ecardwidget --env ECW_API_KEY=YOUR_API_KEY -- npx -y ecardwidget-mcp
-   ```
+### Option B — Sign in once, then a short command (Claude Code / Cursor / any client)
 
-3. Restart your client. It connects and shows the tools your key is scoped for.
+```bash
+npx ecardwidget-mcp login          # prompts for your key, verifies + saves it locally (0600)
+claude mcp add ecardwidget -- npx -y ecardwidget-mcp   # no key in the command
+```
+
+The server reads the saved key automatically. (`npx ecardwidget-mcp logout` removes it.)
+
+### Option C — Put the key in your client config (manual)
+
+```json
+{
+  "mcpServers": {
+    "ecardwidget": {
+      "command": "npx",
+      "args": ["-y", "ecardwidget-mcp"],
+      "env": { "ECW_API_KEY": "YOUR_API_KEY" }
+    }
+  }
+}
+```
+
+Restart your client. It connects and shows the tools your key is scoped for. Precedence: an explicit
+`ECW_API_KEY` env var always wins over the saved `login` credential.
 
 ## Configuration
 
