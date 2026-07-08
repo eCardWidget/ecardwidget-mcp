@@ -1,0 +1,34 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "name": "io.github.ecardwidget/ecardwidget-mcp",
+  "description": "Official eCardWidget MCP server — send/search eCards, manage the directory, and run campaigns/widgets/automations with a scoped API key.",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/eCardWidget/ecardwidget-mcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@ecardwidget/mcp",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "ECW_API_KEY",
+          "description": "Scoped eCardWidget API key (Settings → Developers → API Keys). Used as a Bearer token.",
+          "isRequired": true,
+          "isSecret": true
+        },
+        {
+          "name": "ECW_BASE_URL",
+          "description": "Override the API base URL (default https://app.ecardwidget.com). For custom domains / testing.",
+          "isRequired": false,
+          "default": "https://app.ecardwidget.com"
+        }
+      ]
+    }
+  ]
+}
