@@ -1,6 +1,6 @@
 # eCardWidget MCP Server
 
-[![npm](https://img.shields.io/npm/v/%40ecardwidget%2Fmcp.svg)](https://www.npmjs.com/package/@ecardwidget/mcp)
+[![npm](https://img.shields.io/npm/v/ecardwidget-mcp.svg)](https://www.npmjs.com/package/ecardwidget-mcp)
 
 The official [Model Context Protocol](https://modelcontextprotocol.io) server for
 **[eCardWidget](https://www.ecardwidget.com)**. Let an AI assistant (Claude Desktop, Claude Code, Cursor,
@@ -22,7 +22,7 @@ campaigns/widgets/automations — using an **API key you generate and scope your
      "mcpServers": {
        "ecardwidget": {
          "command": "npx",
-         "args": ["-y", "@ecardwidget/mcp"],
+         "args": ["-y", "ecardwidget-mcp"],
          "env": { "ECW_API_KEY": "YOUR_API_KEY" }
        }
      }
@@ -32,7 +32,7 @@ campaigns/widgets/automations — using an **API key you generate and scope your
    Or with the Claude Code CLI:
 
    ```bash
-   claude mcp add ecardwidget --env ECW_API_KEY=YOUR_API_KEY -- npx -y @ecardwidget/mcp
+   claude mcp add ecardwidget --env ECW_API_KEY=YOUR_API_KEY -- npx -y ecardwidget-mcp
    ```
 
 3. Restart your client. It connects and shows the tools your key is scoped for.

@@ -1,8 +1,15 @@
 {
-  "name": "@ecardwidget/mcp",
+  "name": "ecardwidget-mcp",
   "version": "0.1.0",
-  "description": "Official Model Context Protocol (MCP) server for eCardWidget — let an AI agent run your account (campaigns, widgets, automations, directory, eCards) with a scoped API key.",
-  "keywords": ["mcp", "model-context-protocol", "ecardwidget", "ecards", "ai", "agent"],
+  "description": "Official Model Context Protocol (MCP) server for eCardWidget \u2014 let an AI agent run your account (campaigns, widgets, automations, directory, eCards) with a scoped API key.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ecardwidget",
+    "ecards",
+    "ai",
+    "agent"
+  ],
   "homepage": "https://github.com/eCardWidget/ecardwidget-mcp",
   "repository": {
     "type": "git",
@@ -16,10 +23,12 @@
   "bin": {
     "ecardwidget-mcp": "dist/index.js"
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "files": ["dist", "README.md", "SECURITY.md", "server.json"],
+  "files": [
+    "dist",
+    "README.md",
+    "SECURITY.md",
+    "server.json"
+  ],
   "engines": {
     "node": ">=18"
   },

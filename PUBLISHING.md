@@ -2,16 +2,15 @@
 
 Two steps: publish the npm package (artifact), then publish the metadata to the MCP Registry.
 
-## 1. npm (scoped, public)
+## 1. npm
 
-`@ecardwidget/mcp` is a scoped package, so the npm org **ecardwidget** must exist and the first publish
-must be public.
+`ecardwidget-mcp` is an unscoped public package, published under the `ecardwidget` npm account.
 
 ```bash
 npm run build
 npm test
-npm login                     # as the ecardwidget npm org
-npm publish --access public   # (package.json also sets publishConfig.access=public)
+npm login          # as the ecardwidget npm account
+npm publish        # unscoped packages are public by default
 ```
 
 Bump `version` in **both** `package.json` and `server.json` before each release (they must match).
