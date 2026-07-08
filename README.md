@@ -60,11 +60,11 @@ Restart your client. It connects and shows the tools your key is scoped for. Pre
 All tools are namespaced `ecw_*`; only those your key is scoped for are registered.
 
 - **Introspection:** `ecw_whoami`
-- **eCards:** `ecw_search_ecards`, `ecw_get_widget_ecards`, `ecw_send_ecard`
+- **eCards:** `ecw_search_ecards`, `ecw_get_widget_ecards`, `ecw_create_ecard` (image via URL or base64),
+  `ecw_send_ecard`, `ecw_delete_ecard`
 - **Directory:** `ecw_list_team_members`, `ecw_find_team_member`, `ecw_upsert_team_member`,
   `ecw_import_team_members`, `ecw_deactivate_team_member`, `ecw_delete_team_member`
-- **Widgets:** `ecw_list_widgets`, `ecw_duplicate_widget`, `ecw_delete_widget`
-- **eCards:** `ecw_delete_ecard` (plus search/send above)
+- **Widgets:** `ecw_list_widgets`, `ecw_create_widget`, `ecw_duplicate_widget`, `ecw_delete_widget`
 - **Automations:** `ecw_list_automations`, `ecw_create_automation` (birthday / anniversary / onboarding)
 - **Campaigns:** `ecw_list_campaigns`, `ecw_create_campaign` (draft), `ecw_send_campaign`
 

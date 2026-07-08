@@ -1,6 +1,6 @@
 {
   "name": "ecardwidget-mcp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Official Model Context Protocol (MCP) server for eCardWidget \u2014 let an AI agent run your account (campaigns, widgets, automations, directory, eCards) with a scoped API key.",
   "keywords": [
     "mcp",

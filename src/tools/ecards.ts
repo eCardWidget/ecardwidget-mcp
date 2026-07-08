@@ -35,6 +35,74 @@ export const getWidgetEcardsTool: EcwTool = {
 };
 
 /**
+ * Create a new eCard design and attach it to a widget. POST /v2/api/ecard/save
+ * (which calls saveEcard internally). Artwork can be supplied as a public URL
+ * (stored as self_hosted_url) or a base64 blob (ecardimg). `options` passes
+ * through any other eCard column so the full design surface is reachable.
+ */
+export const createEcardTool: EcwTool = {
+  name: "ecw_create_ecard",
+  requires: "ecards:write",
+  register(server, client) {
+    server.registerTool(
+      "ecw_create_ecard",
+      {
+        title: "Create an eCard",
+        description:
+          "Create a new eCard and attach it to a widget. `name` and `widget_id` are required. Supply the " +
+          "artwork EITHER as `image_url` (public https URL) OR `image_base64` (base64 string or data: URI) — " +
+          "or neither for a text-only card. `details` is the eCard's HTML body. `options` sets any other eCard " +
+          "field (price, url_redirect_after_send, videoLink, disabled, customFieldsConfig, …). Get a widget_id " +
+          "from ecw_create_widget or ecw_list_widgets.",
+        inputSchema: {
+          name: z.string().min(1).max(255).describe("eCard name/title (required)."),
+          widget_id: z
+            .number()
+            .int()
+            .positive()
+            .describe("Numeric widget id to attach this eCard to (from ecw_create_widget / ecw_list_widgets)."),
+          details: z.string().optional().describe("eCard HTML body (sanitized server-side)."),
+          image_url: z
+            .string()
+            .url()
+            .optional()
+            .describe("Public https URL of the eCard image (stored as self_hosted_url)."),
+          image_base64: z
+            .string()
+            .optional()
+            .describe("eCard image as base64 (raw or data: URI). Use instead of image_url."),
+          options: z
+            .record(z.any())
+            .optional()
+            .describe("Any other eCard field (price, url_redirect_after_send, videoLink, disabled, customFieldsConfig, …)."),
+        },
+        annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+      },
+      async (args: any) => {
+        try {
+          const myEcard: Record<string, unknown> = {
+            name: args.name,
+            widgetid: args.widget_id,
+            details: args.details ?? " ",
+            ...(args.options ?? {}),
+          };
+          if (args.image_url) myEcard.self_hosted_url = args.image_url;
+          const body: Record<string, unknown> = { myEcard };
+          if (args.image_base64) body.ecardimg = args.image_base64;
+          const data = await client.post("/v2/api/ecard/save", body);
+          const e = data?.data ?? {};
+          return textResult(
+            `Created eCard "${e.name ?? args.name}" (id ${e.id ?? "?"}) on widget ${e.widgetid ?? args.widget_id}.`,
+          );
+        } catch (err) {
+          return errorResult(err instanceof EcwApiError ? err.message : (err as Error).message);
+        }
+      },
+    );
+  },
+};
+
+/**
  * Send / schedule / share a single eCard. Reaches an external recipient (email)
  * so it's annotated openWorldHint; it is a normal single-recipient write (NOT
  * the two-phase destructive flow, which is reserved for send-to-many campaigns).

@@ -7,9 +7,9 @@ import {
   listAutomationsTool,
   listTeamMembersTool,
 } from "./reads.js";
-import { getWidgetEcardsTool, sendEcardTool } from "./ecards.js";
+import { getWidgetEcardsTool, sendEcardTool, createEcardTool } from "./ecards.js";
 import { upsertTeamMemberTool, findTeamMemberTool, importTeamMembersTool } from "./directory.js";
-import { duplicateWidgetTool } from "./widgets.js";
+import { duplicateWidgetTool, createWidgetTool } from "./widgets.js";
 import { createAutomationTool } from "./automations.js";
 import { createCampaignTool } from "./campaigns.js";
 import {
@@ -37,8 +37,10 @@ export const ALL_TOOLS: EcwTool[] = [
   findTeamMemberTool,
   // Writes (create / update)
   sendEcardTool,
+  createEcardTool,
   upsertTeamMemberTool,
   importTeamMembersTool,
+  createWidgetTool,
   duplicateWidgetTool,
   createAutomationTool,
   createCampaignTool,

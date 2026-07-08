@@ -4,7 +4,8 @@ import { _resetConfirmStore } from "../confirm.js";
 import { sendEcardTool } from "./ecards.js";
 import { createCampaignTool } from "./campaigns.js";
 import { createAutomationTool } from "./automations.js";
-import { duplicateWidgetTool } from "./widgets.js";
+import { duplicateWidgetTool, createWidgetTool } from "./widgets.js";
+import { createEcardTool } from "./ecards.js";
 import { importTeamMembersTool } from "./directory.js";
 import { deleteTeamMemberTool, sendCampaignTool, deleteWidgetTool, deleteEcardTool } from "./destructive.js";
 
@@ -56,6 +57,42 @@ describe("ecw_send_ecard", () => {
     const h = harness(sendEcardTool, { post: { "/v2/api/pub/ecard-actions/send-ecard": { data: { shareUrl: "https://x/y" } } } });
     const r = await h.call({ ecard_id: "e1", sender_email: "a@b.com", sender_name: "A", recipient_name: "B", type: "ecard_copy_link" });
     expect(textOf(r)).toContain("https://x/y");
+  });
+});
+
+describe("ecw_create_widget", () => {
+  it("posts id=0 with a default wconfig and reports the new id", async () => {
+    const h = harness(createWidgetTool, { post: { "/v2/api/widget/save": { data: { widget: { id: 14637, name: "Team Cards", vanity_id: "abc" } } } } });
+    const r = await h.call({ name: "Team Cards" });
+    expect(r.isError).toBeFalsy();
+    expect(h.calls[0]!.body.widget).toMatchObject({ id: 0, name: "Team Cards", wconfig: { locale: "en" } });
+    expect(textOf(r)).toMatch(/id 14637/);
+  });
+
+  it("merges options and a custom wconfig into the widget", async () => {
+    const h = harness(createWidgetTool, { post: { "/v2/api/widget/save": { data: { widget: { id: 1 } } } } });
+    await h.call({ name: "W", wconfig: { locale: "fr", theme: "dark" }, options: { gift_card_enabled: 1, page_heading_html: "<h1>Hi</h1>" } });
+    expect(h.calls[0]!.body.widget).toMatchObject({
+      id: 0, name: "W", wconfig: { locale: "fr", theme: "dark" }, gift_card_enabled: 1, page_heading_html: "<h1>Hi</h1>",
+    });
+  });
+});
+
+describe("ecw_create_ecard", () => {
+  it("attaches to a widget and maps image_url → self_hosted_url", async () => {
+    const h = harness(createEcardTool, { post: { "/v2/api/ecard/save": { data: { id: 90, name: "Card", widgetid: 5 } } } });
+    const r = await h.call({ name: "Card", widget_id: 5, details: "<p>hi</p>", image_url: "https://x/y.png" });
+    expect(r.isError).toBeFalsy();
+    expect(h.calls[0]!.body.myEcard).toMatchObject({ name: "Card", widgetid: 5, details: "<p>hi</p>", self_hosted_url: "https://x/y.png" });
+    expect(h.calls[0]!.body.ecardimg).toBeUndefined();
+    expect(textOf(r)).toMatch(/id 90.*widget 5/);
+  });
+
+  it("sends a base64 blob as top-level ecardimg and passes options through", async () => {
+    const h = harness(createEcardTool, { post: { "/v2/api/ecard/save": { data: { id: 91 } } } });
+    await h.call({ name: "Blob", widget_id: 5, image_base64: "data:image/png;base64,AAAA", options: { price: "5.00", disabled: 1 } });
+    expect(h.calls[0]!.body.ecardimg).toBe("data:image/png;base64,AAAA");
+    expect(h.calls[0]!.body.myEcard).toMatchObject({ name: "Blob", widgetid: 5, price: "5.00", disabled: 1 });
   });
 });
 

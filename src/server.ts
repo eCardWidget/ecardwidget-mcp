@@ -5,7 +5,7 @@ import { ALL_TOOLS } from "./tools/index.js";
 import { registerScopedTools } from "./tools/registry.js";
 
 export const SERVER_NAME = "ecardwidget";
-export const SERVER_VERSION = "0.2.0";
+export const SERVER_VERSION = "0.3.0";
 
 /**
  * Build an MCP server whose registered tools are exactly those the calling key
