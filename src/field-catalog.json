@@ -1,0 +1,1397 @@
+{
+  "generatedFrom": "https://ecardwidget.com/docs/openapi.yaml",
+  "entities": {
+    "widget": {
+      "endpoint": "POST /v2/api/widget/save",
+      "wrapper": "widget",
+      "description": "A widget's full settable surface for `POST /widget/save`. Fields are grouped below by subsystem. Boolean flags are stored as `0`/`1` (the API also accepts `true`/`false`). Fields marked read-only are returned by the API but ignored on input.",
+      "required": [
+        "id",
+        "name",
+        "wconfig"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "integer",
+          "required": true,
+          "description": "**Required.** `0` creates a new widget; a real id updates that widget."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "**Required.** Widget name (plain text; HTML is stripped)."
+        },
+        {
+          "name": "refname",
+          "type": "string",
+          "description": "Internal reference name."
+        },
+        {
+          "name": "widget_type",
+          "type": "string",
+          "description": "Widget kind; normally blank. `campaign` marks a campaign-backing widget."
+        },
+        {
+          "name": "widget_mode",
+          "type": "integer",
+          "description": "Widget rendering mode."
+        },
+        {
+          "name": "vanity_id",
+          "type": "string",
+          "readOnly": true,
+          "description": "Public unguessable id (assigned on create)."
+        },
+        {
+          "name": "ownerid",
+          "type": "integer",
+          "readOnly": true,
+          "description": "Owning account (assigned server-side)."
+        },
+        {
+          "name": "blocked",
+          "type": "integer",
+          "readOnly": true,
+          "description": "Abuse/suspension flag (system-managed)."
+        },
+        {
+          "name": "sortOrder",
+          "type": "integer",
+          "description": "Display order among your widgets."
+        },
+        {
+          "name": "createdAt",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "updatedAt",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "legacyMode",
+          "type": "integer",
+          "deprecated": true,
+          "description": "Legacy renderer flag."
+        },
+        {
+          "name": "legacyMode_old",
+          "type": "integer",
+          "deprecated": true
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "description": "Default locale; mirrors `wconfig.locale`."
+        },
+        {
+          "name": "wconfig",
+          "type": "object",
+          "container": true,
+          "description": "Widget display/behavior config, stored as JSON in the `wconfig` column. Sent as an object on `POST /widget/save`. All keys optional; unknown keys are preserved. Boolean-ish keys accept true/false.",
+          "children": [
+            {
+              "name": "locale",
+              "type": "string",
+              "description": "Widget UI language (e.g. en, spanish, french)."
+            },
+            {
+              "name": "theme",
+              "type": "string",
+              "enum": [
+                "light",
+                "dark"
+              ],
+              "description": "Widget color theme."
+            },
+            {
+              "name": "widgetThemeColor",
+              "type": "string",
+              "description": "Primary/action color (hex)."
+            },
+            {
+              "name": "thumbColumns",
+              "type": "integer",
+              "description": "eCard thumbnail grid columns."
+            },
+            {
+              "name": "thumbHeight",
+              "type": "integer",
+              "description": "Thumbnail height in px."
+            },
+            {
+              "name": "thumbStyle",
+              "type": "string",
+              "description": "Thumbnail style preset."
+            },
+            {
+              "name": "thumbBG",
+              "type": "string",
+              "description": "Thumbnail background color."
+            },
+            {
+              "name": "ecardsPerPage",
+              "type": "integer",
+              "description": "eCards shown per page in the gallery."
+            },
+            {
+              "name": "directoryEnabled",
+              "type": "boolean",
+              "description": "Show the team-directory recipient picker."
+            },
+            {
+              "name": "directoryOfferAllMembers",
+              "type": "boolean",
+              "description": "Offer all directory members as recipients."
+            },
+            {
+              "name": "directoryAllowManualEntry",
+              "type": "boolean",
+              "description": "Allow typing a recipient not in the directory."
+            },
+            {
+              "name": "directoryLimitToSelectedMembers",
+              "type": "boolean",
+              "description": "Restrict recipients to a chosen subset."
+            },
+            {
+              "name": "limitEmailsPerSession",
+              "type": "integer",
+              "description": "Max sends per sender session (0 = unlimited)."
+            },
+            {
+              "name": "disableSocialWidgetTabs",
+              "type": "boolean",
+              "description": "Hide the social-share tabs."
+            },
+            {
+              "name": "shareButtonText",
+              "type": "string",
+              "description": "Label for the share button."
+            },
+            {
+              "name": "shareCaptionText",
+              "type": "string",
+              "description": "Default social share caption."
+            },
+            {
+              "name": "readReceiptEnabled",
+              "type": "boolean",
+              "description": "Notify the sender when the eCard is opened."
+            },
+            {
+              "name": "personalMessageOptional",
+              "type": "boolean",
+              "description": "Make the sender's personal message optional."
+            }
+          ]
+        },
+        {
+          "name": "merge_tag_defaults",
+          "type": "object",
+          "description": "System merge-tag fallback values (e.g. `{recipient_name: 'friend'}`), stored as JSON."
+        },
+        {
+          "name": "custom_fields_preset_id",
+          "type": "integer",
+          "description": "Attach a custom-fields preset you own (0/empty = none)."
+        },
+        {
+          "name": "allow_custom_base64_image",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Allow senders to upload a custom base64 image."
+        },
+        {
+          "name": "public_share_enabled",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Allow public sharing of sent eCards."
+        },
+        {
+          "name": "block_sort_order",
+          "type": "string",
+          "description": "Ordering of builder blocks/sections."
+        },
+        {
+          "name": "website",
+          "type": "string"
+        },
+        {
+          "name": "logo",
+          "type": "string",
+          "description": "Logo image URL."
+        },
+        {
+          "name": "address",
+          "type": "string"
+        },
+        {
+          "name": "denomination",
+          "type": "string",
+          "description": "Organization/denomination label."
+        },
+        {
+          "name": "stwitter",
+          "type": "string",
+          "description": "Twitter/X URL."
+        },
+        {
+          "name": "sfacebook",
+          "type": "string",
+          "description": "Facebook URL."
+        },
+        {
+          "name": "sinstagram",
+          "type": "string",
+          "description": "Instagram URL."
+        },
+        {
+          "name": "slinkedin",
+          "type": "string",
+          "description": "LinkedIn URL."
+        },
+        {
+          "name": "syoutube",
+          "type": "string",
+          "description": "YouTube URL."
+        },
+        {
+          "name": "page_layout",
+          "type": "string",
+          "description": "Landing-page layout preset."
+        },
+        {
+          "name": "page_bg_color",
+          "type": "string",
+          "description": "Page background color (hex)."
+        },
+        {
+          "name": "page_bg_image",
+          "type": "string",
+          "description": "Page background image URL."
+        },
+        {
+          "name": "page_logo_url",
+          "type": "string",
+          "description": "Page logo image URL."
+        },
+        {
+          "name": "page_heading_html",
+          "type": "string",
+          "description": "Page heading HTML (sanitized server-side)."
+        },
+        {
+          "name": "page_subtitle_html",
+          "type": "string",
+          "description": "Page subtitle HTML (sanitized server-side)."
+        },
+        {
+          "name": "page_css",
+          "type": "string",
+          "description": "Custom CSS for the landing page."
+        },
+        {
+          "name": "widgetcss",
+          "type": "string",
+          "description": "Custom CSS injected into the widget."
+        },
+        {
+          "name": "stylebg",
+          "type": "string",
+          "description": "Widget background color."
+        },
+        {
+          "name": "stylebghead",
+          "type": "string",
+          "description": "Header background color."
+        },
+        {
+          "name": "stylebgbody",
+          "type": "string",
+          "description": "Body background color."
+        },
+        {
+          "name": "styletext",
+          "type": "string",
+          "description": "Body text color."
+        },
+        {
+          "name": "styleheadtext",
+          "type": "string",
+          "description": "Header text color."
+        },
+        {
+          "name": "stylelink",
+          "type": "string",
+          "description": "Link color."
+        },
+        {
+          "name": "style_fontsize",
+          "type": "integer",
+          "description": "Body font size (px)."
+        },
+        {
+          "name": "style_fontsize_header",
+          "type": "integer",
+          "description": "Header font size (px)."
+        },
+        {
+          "name": "recipientDomainWhitelist",
+          "type": "string",
+          "description": "Newline/comma list of allowed recipient email domains."
+        },
+        {
+          "name": "sender_email_domains_whitelist",
+          "type": "string",
+          "description": "Allowed sender email domains."
+        },
+        {
+          "name": "recipient_email_domains_whitelist",
+          "type": "string",
+          "description": "Allowed recipient email domains (v2)."
+        },
+        {
+          "name": "read_receipt_email_send_more",
+          "type": "integer",
+          "description": "Read-receipt \"send more\" behavior."
+        },
+        {
+          "name": "sender_login_enabled",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Require a sender login before sending."
+        },
+        {
+          "name": "sender_login_display_text",
+          "type": "string",
+          "description": "Sender-login prompt text."
+        },
+        {
+          "name": "email_verification_required",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Require email verification for senders."
+        },
+        {
+          "name": "group_card_enabled",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Enable group-card (multi-signer) mode."
+        },
+        {
+          "name": "dir_on",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Enable the team directory for this widget."
+        },
+        {
+          "name": "dir_sender_must_be_in_directory",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Restrict senders to directory members. Disabling this on an existing widget is OTP-gated."
+        },
+        {
+          "name": "dir_force_sso",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Require directory SSO (mutually exclusive with dir_sso_disabled)."
+        },
+        {
+          "name": "dir_sso_disabled",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Turn directory SSO off (cannot be set with dir_force_sso)."
+        },
+        {
+          "name": "dir_passwords_on",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Require a password for directory access."
+        },
+        {
+          "name": "dir_session_timeout_minutes",
+          "type": "integer",
+          "description": "Directory session timeout (minutes)."
+        },
+        {
+          "name": "dir_mgr_remind_bday_on",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Manager birthday reminders."
+        },
+        {
+          "name": "dir_mgr_remind_anniversary_on",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Manager anniversary reminders."
+        },
+        {
+          "name": "dir_mgr_sender_bcc_on",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "BCC the manager on sender emails."
+        },
+        {
+          "name": "dir_mgr_recipient_bcc_on",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "BCC the manager on recipient emails."
+        },
+        {
+          "name": "otp_remember_me_enabled",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Allow \"remember me\" for directory OTP."
+        },
+        {
+          "name": "ecomm_type",
+          "type": "string",
+          "description": "eCommerce mode (e.g. donation, product); blank = off."
+        },
+        {
+          "name": "ecomm_currency",
+          "type": "string",
+          "description": "ISO-4217 currency for widget payments."
+        },
+        {
+          "name": "ecomm_testmode",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Use Stripe test mode."
+        },
+        {
+          "name": "ecomm_widget_price",
+          "type": "number",
+          "description": "Fixed widget price."
+        },
+        {
+          "name": "ecomm_charge_per_recipient",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Charge per recipient."
+        },
+        {
+          "name": "ecomm_unlimited_after_pay",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Unlimited sends after one payment."
+        },
+        {
+          "name": "ecomm_predefined_options",
+          "type": "string",
+          "description": "Comma list of preset amounts."
+        },
+        {
+          "name": "ecomm_predefined_options2",
+          "type": "integer",
+          "description": "Preset-amount mode toggle."
+        },
+        {
+          "name": "ecomm_predefined_options_allow_other_amount",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Allow a custom \"other\" amount."
+        },
+        {
+          "name": "ecomm_predefined_options_other_min",
+          "type": "number",
+          "description": "Minimum custom amount."
+        },
+        {
+          "name": "ecomm_predefined_options_other_max",
+          "type": "number",
+          "description": "Maximum custom amount."
+        },
+        {
+          "name": "ecomm_require_billing_info",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Require billing details at checkout."
+        },
+        {
+          "name": "ecomm_address_mode",
+          "type": "string",
+          "description": "Address collection mode."
+        },
+        {
+          "name": "ecomm_support_email",
+          "type": "string",
+          "format": "email",
+          "description": "Checkout support email."
+        },
+        {
+          "name": "ecomm_support_phone",
+          "type": "string",
+          "description": "Checkout support phone."
+        },
+        {
+          "name": "ecomm_text_top",
+          "type": "string",
+          "description": "Text shown atop the checkout."
+        },
+        {
+          "name": "ecomm_receipt_text_top",
+          "type": "string",
+          "description": "Text shown atop the receipt."
+        },
+        {
+          "name": "shopify_checkout_title",
+          "type": "string",
+          "description": "Shopify checkout title."
+        },
+        {
+          "name": "shopify_checkout_body",
+          "type": "string",
+          "description": "Shopify checkout body."
+        },
+        {
+          "name": "gift_card_enabled",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Offer gift cards on this widget (requires BYOK)."
+        },
+        {
+          "name": "gift_card_denominations",
+          "type": "string",
+          "description": "JSON/list of offered denominations."
+        },
+        {
+          "name": "gift_card_product_ids",
+          "type": "string",
+          "description": "JSON/list of provider product ids/brands offered."
+        },
+        {
+          "name": "gift_card_allow_custom_amount",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Allow a custom gift-card amount."
+        },
+        {
+          "name": "gift_card_custom_min",
+          "type": "number",
+          "description": "Minimum custom gift-card amount."
+        },
+        {
+          "name": "gift_card_custom_max",
+          "type": "number",
+          "description": "Maximum custom gift-card amount."
+        }
+      ]
+    },
+    "ecard": {
+      "endpoint": "POST /v2/api/ecard/save",
+      "wrapper": "myEcard",
+      "description": "An eCard's settable surface for `POST /ecard/save` (sent as `myEcard`). Every eCard belongs to a widget (`widgetid`). Artwork is set via `self_hosted_url` (URL) or the sibling top-level `ecardimg` base64 field — not via the read-only `cover_image`. Fields marked read-only are returned but ignored on input.",
+      "required": [
+        "name",
+        "widgetid"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "integer",
+          "description": "Omit to create; send a real id to update that eCard."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "**Required.** eCard name/title."
+        },
+        {
+          "name": "widgetid",
+          "type": "integer",
+          "required": true,
+          "description": "**Required.** Widget this eCard belongs to."
+        },
+        {
+          "name": "ecardbrandid",
+          "type": "integer",
+          "description": "Brand id; defaults to your account brand if omitted."
+        },
+        {
+          "name": "ecard_mode",
+          "type": "string",
+          "enum": [
+            "classic",
+            "popup_card"
+          ],
+          "description": "`classic` = simple (static) eCard; `popup_card` = animated envelope card."
+        },
+        {
+          "name": "details",
+          "type": "string",
+          "description": "eCard body HTML (sanitized server-side)."
+        },
+        {
+          "name": "header",
+          "type": "string",
+          "description": "eCard header text."
+        },
+        {
+          "name": "emailSubject",
+          "type": "string",
+          "description": "Subject line used when the eCard is emailed."
+        },
+        {
+          "name": "disabled",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Hide this eCard from the widget gallery."
+        },
+        {
+          "name": "price",
+          "type": "number",
+          "description": "Per-eCard price (eCommerce widgets)."
+        },
+        {
+          "name": "vanity_id",
+          "type": "string",
+          "readOnly": true,
+          "description": "Public unguessable id (assigned on create)."
+        },
+        {
+          "name": "ownerid",
+          "type": "integer",
+          "readOnly": true
+        },
+        {
+          "name": "userid",
+          "type": "integer",
+          "readOnly": true
+        },
+        {
+          "name": "siteid",
+          "type": "integer",
+          "readOnly": true
+        },
+        {
+          "name": "template_approved",
+          "type": "integer",
+          "readOnly": true,
+          "description": "Platform template-approval flag."
+        },
+        {
+          "name": "globalized",
+          "type": "integer",
+          "readOnly": true
+        },
+        {
+          "name": "sortOrder",
+          "type": "integer",
+          "readOnly": true,
+          "description": "Set via /ecard/saveOrder, not here."
+        },
+        {
+          "name": "createdAt",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "updatedat",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "legacy",
+          "type": "integer",
+          "deprecated": true
+        },
+        {
+          "name": "details_old",
+          "type": "string",
+          "deprecated": true
+        },
+        {
+          "name": "canScheduleBak",
+          "type": "integer",
+          "deprecated": true
+        },
+        {
+          "name": "self_hosted_url",
+          "type": "string",
+          "format": "uri",
+          "description": "Public image URL for the eCard (validated as a URL)."
+        },
+        {
+          "name": "cover_image",
+          "type": "string",
+          "readOnly": true,
+          "description": "Stored cover-image path; set by uploading `ecardimg`, not directly."
+        },
+        {
+          "name": "thumb_image",
+          "type": "string",
+          "readOnly": true,
+          "description": "Generated thumbnail path."
+        },
+        {
+          "name": "filename",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "filesize",
+          "type": "integer",
+          "readOnly": true
+        },
+        {
+          "name": "pixie_config_path",
+          "type": "string",
+          "readOnly": true,
+          "description": "Pixie-editor config path (managed internally)."
+        },
+        {
+          "name": "envelope_theme",
+          "type": "string",
+          "description": "Envelope visual theme."
+        },
+        {
+          "name": "envelope_bg_image_url",
+          "type": "string",
+          "description": "Envelope background image URL."
+        },
+        {
+          "name": "envelope_color_settings",
+          "type": "object",
+          "description": "Envelope color tuning (contrast/saturation/hue), stored as JSON."
+        },
+        {
+          "name": "envelope_confetti",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Show confetti on open."
+        },
+        {
+          "name": "envelope_auto_open",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Auto-open the envelope."
+        },
+        {
+          "name": "envelope_video_url",
+          "type": "string",
+          "description": "Envelope video URL."
+        },
+        {
+          "name": "envelope_audio_url",
+          "type": "string",
+          "description": "Envelope audio URL."
+        },
+        {
+          "name": "envelope_audio_repeat",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Loop the envelope audio."
+        },
+        {
+          "name": "ecardLink",
+          "type": "string",
+          "format": "uri",
+          "description": "Call-to-action link on the eCard."
+        },
+        {
+          "name": "ecardLinkAltText",
+          "type": "string",
+          "description": "Alt/label text for the eCard link."
+        },
+        {
+          "name": "videoLink",
+          "type": "string",
+          "format": "uri",
+          "description": "Embedded video link."
+        },
+        {
+          "name": "url_redirect_after_send",
+          "type": "string",
+          "format": "uri",
+          "description": "Redirect the sender here after sending."
+        },
+        {
+          "name": "og_title",
+          "type": "string",
+          "description": "Open Graph title for shared links."
+        },
+        {
+          "name": "og_description",
+          "type": "string",
+          "description": "Open Graph description for shared links."
+        },
+        {
+          "name": "thumbnail_alt_label",
+          "type": "string",
+          "description": "Accessibility alt text for the thumbnail."
+        },
+        {
+          "name": "personalMessageBox",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Show the sender a personal-message box."
+        },
+        {
+          "name": "canSchedule",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Allow the sender to schedule delivery."
+        },
+        {
+          "name": "predefinedScheduleOn",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Use a predefined send schedule."
+        },
+        {
+          "name": "predefinedScheduleForced",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Force the predefined schedule (sender can't change it)."
+        },
+        {
+          "name": "predefinedSchedule",
+          "type": "string",
+          "format": "date-time",
+          "description": "The predefined send date/time."
+        },
+        {
+          "name": "publishOn",
+          "type": "string",
+          "format": "date-time",
+          "description": "Make the eCard available on this date."
+        },
+        {
+          "name": "expireOn",
+          "type": "string",
+          "format": "date-time",
+          "description": "Retire the eCard on this date."
+        },
+        {
+          "name": "customFieldsConfig",
+          "type": "object",
+          "description": "Canvas custom-fields configuration (items[], etc.). Field names may not start with `preset_`."
+        },
+        {
+          "name": "hasCustomFieldItems",
+          "type": "integer",
+          "readOnly": true,
+          "description": "Derived server-side from customFieldsConfig."
+        },
+        {
+          "name": "usesCustomFieldCanvas",
+          "type": "integer",
+          "readOnly": true,
+          "description": "Derived server-side from customFieldsConfig."
+        }
+      ]
+    },
+    "campaign": {
+      "endpoint": "POST /v2/api/campaign/save",
+      "wrapper": "campaign",
+      "description": "A campaign's settable surface for `POST /campaign/save` (sent as `campaign`). Creating a campaign yields a draft; eCards, recipients, scheduling and sending are separate calls. Fields marked read-only are returned but ignored on input.",
+      "required": [
+        "campaign_name"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "integer",
+          "description": "Omit to create; send a real id to update."
+        },
+        {
+          "name": "campaign_name",
+          "type": "string",
+          "required": true,
+          "description": "**Required.** Campaign name."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "Internal description/notes."
+        },
+        {
+          "name": "widgetid",
+          "type": "integer",
+          "description": "Backing widget id (auto-created if omitted)."
+        },
+        {
+          "name": "from_name",
+          "type": "string",
+          "description": "Sender display name on the emails."
+        },
+        {
+          "name": "from_email",
+          "type": "string",
+          "format": "email",
+          "description": "Sender email address."
+        },
+        {
+          "name": "personal_message",
+          "type": "string",
+          "description": "Default personal message included with each send."
+        },
+        {
+          "name": "recipient_source",
+          "type": "string",
+          "enum": [
+            "directory",
+            "csv",
+            "mixed"
+          ],
+          "description": "Where recipients come from."
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "enum": [
+            "draft",
+            "scheduled",
+            "sending",
+            "sent",
+            "partially_sent",
+            "failed"
+          ],
+          "readOnly": true,
+          "description": "Lifecycle status (managed by schedule/send)."
+        },
+        {
+          "name": "scheduled_at",
+          "type": "string",
+          "format": "date-time",
+          "description": "Scheduled send time (or set via /campaign/schedule)."
+        },
+        {
+          "name": "scheduled_timezone",
+          "type": "string",
+          "description": "IANA timezone for the scheduled send."
+        },
+        {
+          "name": "gift_card_enabled",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Attach a gift card to the campaign (sending is then OTP-gated)."
+        },
+        {
+          "name": "gift_card_denomination",
+          "type": "number",
+          "description": "Gift-card amount."
+        },
+        {
+          "name": "gift_card_product_id",
+          "type": "string",
+          "description": "Provider product/brand id."
+        },
+        {
+          "name": "gift_card_product_name",
+          "type": "string",
+          "description": "Provider product/brand label (must match the reward pool)."
+        },
+        {
+          "name": "total_recipients",
+          "type": "integer",
+          "readOnly": true
+        },
+        {
+          "name": "sent_count",
+          "type": "integer",
+          "readOnly": true
+        },
+        {
+          "name": "failed_count",
+          "type": "integer",
+          "readOnly": true
+        },
+        {
+          "name": "sent_at",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "completed_at",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "ownerid",
+          "type": "integer",
+          "readOnly": true
+        },
+        {
+          "name": "createdat",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "updatedat",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "testid",
+          "type": "string",
+          "readOnly": true,
+          "description": "Dev/test isolation id (dev mode only)."
+        }
+      ]
+    },
+    "automation": {
+      "endpoint": "POST /v2/api/automation/save",
+      "wrapper": "automation",
+      "description": "An automation's settable surface for `POST /automation/save` (sent as `automation`). JSON fields (`trigger_config`, `timing_config`, `random_messages`, `selected_ecard_ids`, `selected_member_ids`, `selected_department_ids`) are sent as objects/arrays. Fields marked read-only are ignored on input.",
+      "required": [
+        "automation_name",
+        "event_type"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "integer",
+          "description": "Omit to create; send a real id to update. `id` + `enabled` alone = partial toggle."
+        },
+        {
+          "name": "automation_name",
+          "type": "string",
+          "required": true,
+          "description": "**Required.** Automation name."
+        },
+        {
+          "name": "event_type",
+          "type": "string",
+          "enum": [
+            "birthday",
+            "anniversary",
+            "holiday",
+            "fixed_date",
+            "custom_field",
+            "rule_based",
+            "onboarding"
+          ],
+          "required": true,
+          "description": "**Required.** What the automation fires on."
+        },
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "Whether the automation is active."
+        },
+        {
+          "name": "from_name",
+          "type": "string",
+          "description": "Sender display name."
+        },
+        {
+          "name": "from_email",
+          "type": "string",
+          "format": "email",
+          "description": "Sender email address."
+        },
+        {
+          "name": "recipient_source",
+          "type": "string",
+          "enum": [
+            "directory",
+            "spreadsheet"
+          ],
+          "description": "Where recipients come from."
+        },
+        {
+          "name": "is_default",
+          "type": "boolean",
+          "description": "Mark as the account's default automation for this type."
+        },
+        {
+          "name": "trigger_type",
+          "type": "string",
+          "enum": [
+            "recipient_date",
+            "fixed_date",
+            "rule_based"
+          ],
+          "description": "How the fire date is computed."
+        },
+        {
+          "name": "trigger_config",
+          "type": "object",
+          "description": "Trigger rule/date config (shape depends on trigger_type), stored as JSON."
+        },
+        {
+          "name": "timing_config",
+          "type": "object",
+          "description": "Offset/window/send-schedule config, stored as JSON."
+        },
+        {
+          "name": "holiday_preset_id",
+          "type": "string",
+          "description": "Holiday preset id (for event_type=holiday)."
+        },
+        {
+          "name": "send_time",
+          "type": "string",
+          "description": "Local send time, HH:MM (24h)."
+        },
+        {
+          "name": "timezone",
+          "type": "string",
+          "description": "IANA timezone, e.g. America/New_York."
+        },
+        {
+          "name": "selected_ecard_ids",
+          "type": "array",
+          "description": "eCard ids the automation sends."
+        },
+        {
+          "name": "default_cards_enabled",
+          "type": "boolean",
+          "description": "Use the account's default cards."
+        },
+        {
+          "name": "random_messages",
+          "type": "array",
+          "description": "Pool of messages to pick from randomly."
+        },
+        {
+          "name": "selected_member_filter_on",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Restrict to a member subset."
+        },
+        {
+          "name": "selected_member_mode",
+          "type": "string",
+          "enum": [
+            "include",
+            "exclude",
+            "department"
+          ],
+          "description": "How selected_member_ids / departments apply."
+        },
+        {
+          "name": "selected_member_ids",
+          "type": "array",
+          "description": "Member ids to include/exclude."
+        },
+        {
+          "name": "selected_department_ids",
+          "type": "array",
+          "description": "Department ids (for department mode)."
+        },
+        {
+          "name": "gift_card_enabled",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Attach a gift card (creating/enabling is OTP-gated)."
+        },
+        {
+          "name": "gift_card_denomination",
+          "type": "number",
+          "description": "Gift-card amount."
+        },
+        {
+          "name": "gift_card_product_id",
+          "type": "string",
+          "description": "Provider product/brand id."
+        },
+        {
+          "name": "gift_card_product_name",
+          "type": "string",
+          "description": "Provider product/brand label (must match the reward pool)."
+        },
+        {
+          "name": "notify_days_before",
+          "type": "integer",
+          "description": "Default lead time for notifications (days)."
+        },
+        {
+          "name": "notify_manager",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Notify the recipient's manager."
+        },
+        {
+          "name": "notify_manager_days_before",
+          "type": "integer"
+        },
+        {
+          "name": "notify_manager_subject",
+          "type": "string"
+        },
+        {
+          "name": "notify_manager_message",
+          "type": "string"
+        },
+        {
+          "name": "notify_department",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Notify the recipient's department."
+        },
+        {
+          "name": "notify_department_days_before",
+          "type": "integer"
+        },
+        {
+          "name": "notify_department_subject",
+          "type": "string"
+        },
+        {
+          "name": "notify_department_message",
+          "type": "string"
+        },
+        {
+          "name": "notify_segment",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Notify a segment."
+        },
+        {
+          "name": "notify_segment_days_before",
+          "type": "integer"
+        },
+        {
+          "name": "notify_segment_subject",
+          "type": "string"
+        },
+        {
+          "name": "notify_segment_message",
+          "type": "string"
+        },
+        {
+          "name": "vanity_id",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "ownerid",
+          "type": "integer",
+          "readOnly": true
+        },
+        {
+          "name": "createdat",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "updatedat",
+          "type": "string",
+          "readOnly": true
+        },
+        {
+          "name": "testid",
+          "type": "string",
+          "readOnly": true,
+          "description": "Dev/test isolation id (dev mode only)."
+        }
+      ]
+    }
+  }
+}

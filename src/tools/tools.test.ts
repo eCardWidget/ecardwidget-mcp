@@ -8,6 +8,7 @@ import { duplicateWidgetTool, createWidgetTool } from "./widgets.js";
 import { createEcardTool } from "./ecards.js";
 import { importTeamMembersTool } from "./directory.js";
 import { deleteTeamMemberTool, sendCampaignTool, deleteWidgetTool, deleteEcardTool } from "./destructive.js";
+import { describeFieldsTool } from "./describe-fields.js";
 
 type Call = { method: "GET" | "POST"; path: string; body?: any; query?: any };
 
@@ -57,6 +58,42 @@ describe("ecw_send_ecard", () => {
     const h = harness(sendEcardTool, { post: { "/v2/api/pub/ecard-actions/send-ecard": { data: { shareUrl: "https://x/y" } } } });
     const r = await h.call({ ecard_id: "e1", sender_email: "a@b.com", sender_name: "A", recipient_name: "B", type: "ecard_copy_link" });
     expect(textOf(r)).toContain("https://x/y");
+  });
+});
+
+describe("ecw_describe_fields", () => {
+  const parse = (r: any) => JSON.parse(textOf(r));
+
+  it("returns settable widget fields with required + enums, hiding readOnly by default", async () => {
+    const h = harness(describeFieldsTool);
+    const out = parse(await h.call({ entity: "widget" }));
+    expect(out.entity).toBe("widget");
+    expect(out.wrapper).toBe("widget");
+    expect(out.required).toContain("name");
+    const names = out.fields.map((f: any) => f.name);
+    expect(names).toContain("gift_card_enabled");
+    expect(names).not.toContain("vanity_id"); // readOnly hidden
+    const gc = out.fields.find((f: any) => f.name === "gift_card_enabled");
+    expect(gc.enum).toEqual([0, 1]);
+    // wconfig is a container with nested fields
+    const wconfig = out.fields.find((f: any) => f.name === "wconfig");
+    expect(Array.isArray(wconfig.fields)).toBe(true);
+    expect(wconfig.fields.map((f: any) => f.name)).toContain("locale");
+  });
+
+  it("includes read-only fields when asked", async () => {
+    const h = harness(describeFieldsTool);
+    const names = parse(await h.call({ entity: "ecard", include_readonly: true })).fields.map((f: any) => f.name);
+    expect(names).toContain("cover_image"); // readOnly, shown only with the flag
+  });
+
+  it("covers all four entities", async () => {
+    const h = harness(describeFieldsTool);
+    for (const entity of ["widget", "ecard", "campaign", "automation"]) {
+      const out = parse(await h.call({ entity }));
+      expect(out.fields.length).toBeGreaterThan(0);
+      expect(out.endpoint).toContain(`/${entity === "ecard" ? "ecard" : entity}/save`);
+    }
   });
 });
 

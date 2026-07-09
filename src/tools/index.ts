@@ -1,5 +1,6 @@
 import type { EcwTool } from "./registry.js";
 import { whoamiTool } from "./whoami.js";
+import { describeFieldsTool } from "./describe-fields.js";
 import {
   searchEcardsTool,
   listCampaignsTool,
@@ -25,8 +26,9 @@ import {
  * calling key is authorized for.
  */
 export const ALL_TOOLS: EcwTool[] = [
-  // Introspection (always on)
+  // Introspection + discovery (always on)
   whoamiTool,
+  describeFieldsTool,
   // Reads
   searchEcardsTool,
   getWidgetEcardsTool,

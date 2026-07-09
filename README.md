@@ -59,7 +59,8 @@ Restart your client. It connects and shows the tools your key is scoped for. Pre
 
 All tools are namespaced `ecw_*`; only those your key is scoped for are registered.
 
-- **Introspection:** `ecw_whoami`
+- **Introspection & discovery:** `ecw_whoami`, `ecw_describe_fields` (what fields you can set on a
+  widget / eCard / campaign / automation — synced from the OpenAPI spec)
 - **eCards:** `ecw_search_ecards`, `ecw_get_widget_ecards`, `ecw_create_ecard` (image via URL or base64),
   `ecw_send_ecard`, `ecw_delete_ecard`
 - **Directory:** `ecw_list_team_members`, `ecw_find_team_member`, `ecw_upsert_team_member`,
