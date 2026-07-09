@@ -1,8 +1,8 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.ecardwidget/ecardwidget-mcp",
-  "description": "Official eCardWidget MCP server \u2014 send/search eCards, manage the directory, and run campaigns/widgets/automations with a scoped API key.",
-  "version": "0.5.0",
+  "description": "Send eCards, run bulk campaigns, and automate recurring cards from your AI assistant.",
+  "version": "0.5.1",
   "repository": {
     "url": "https://github.com/eCardWidget/ecardwidget-mcp",
     "source": "github"
@@ -11,7 +11,7 @@
     {
       "registryType": "npm",
       "identifier": "ecardwidget-mcp",
-      "version": "0.5.0",
+      "version": "0.5.1",
       "transport": {
         "type": "stdio"
       },

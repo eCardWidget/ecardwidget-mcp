@@ -2,7 +2,7 @@
   "manifest_version": "0.2",
   "name": "ecardwidget-mcp",
   "display_name": "eCardWidget",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Let an AI assistant run your eCardWidget account \u2014 send and search eCards, manage your directory, and create campaigns, widgets, and automations \u2014 using a scoped API key.",
   "long_description": "The official eCardWidget MCP server. Connect Claude to your eCardWidget account with an API key you generate and scope yourself. It registers only the tools your key permits, and destructive actions (deletes, sending campaigns) require a two-step confirmation.",
   "author": {
