@@ -6,7 +6,7 @@ import { registerScopedTools } from "./tools/registry.js";
 import { ALL_PROMPTS, registerScopedPrompts } from "./prompts.js";
 
 export const SERVER_NAME = "ecardwidget";
-export const SERVER_VERSION = "0.5.1";
+export const SERVER_VERSION = "0.5.2";
 
 /** Server-level context handed to the model at connect: the object model, the
  *  canonical flows, discovery, and the safety rules. Kept compact — it's always
