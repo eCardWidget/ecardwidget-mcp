@@ -53,7 +53,8 @@ export const createEcardTool: EcwTool = {
           "artwork EITHER as `image_url` (public https URL) OR `image_base64` (base64 string or data: URI) — " +
           "or neither for a text-only card. `details` is the eCard's HTML body. `options` sets any other eCard " +
           "field (price, url_redirect_after_send, videoLink, disabled, customFieldsConfig, …). Get a widget_id " +
-          "from ecw_create_widget or ecw_list_widgets.",
+          "from ecw_create_widget or ecw_list_widgets. Next: send it with ecw_send_ecard, or include it in a " +
+          "campaign (ecw_create_campaign) or automation (ecw_create_automation).",
         inputSchema: {
           name: z.string().min(1).max(255).describe("eCard name/title (required)."),
           widget_id: z

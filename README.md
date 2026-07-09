@@ -73,6 +73,14 @@ Destructive tools (delete, send campaign) use a **two-step confirmation** — ca
 one-time token, then again with the token to execute. Deleting automations/campaigns and sending
 gift-card campaigns require confirmation in the dashboard.
 
+### Guided flows (prompts)
+
+The server ships **prompts** — guided, multi-step flow templates your client surfaces as
+slash-commands/suggestions: `run_campaign`, `setup_automation`, `spin_up_widget`, `import_directory`
+(each shown only if your key is scoped for it). It also hands the assistant a compact overview of the
+object model and the core flows at connect, so it understands how widgets, eCards, campaigns,
+automations, and the directory fit together.
+
 Ask naturally, e.g. *"Send a birthday eCard from our Thank-You widget to grace@acme.com"*.
 
 ## Security

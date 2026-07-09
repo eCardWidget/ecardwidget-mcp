@@ -39,7 +39,8 @@ export const upsertTeamMemberTool: EcwTool = {
         title: "Add or update a team member",
         description:
           "Create or update a single directory team member, matched by email. Provide any subset of fields; " +
-          "email is required. For many people at once, use ecw_import_team_members.",
+          "email is required. For many people at once, use ecw_import_team_members. Once members exist, " +
+          "target them with ecw_create_automation (recurring) or ecw_create_campaign (one-time).",
         inputSchema: memberFields,
         annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
       },
@@ -102,7 +103,8 @@ export const importTeamMembersTool: EcwTool = {
         title: "Import team members (bulk)",
         description:
           `Add or update up to ${MAX_IMPORT} team members in one call (upsert by email). Each row is upserted ` +
-          "individually with automatic backoff if the rate limit is hit; returns a summary of successes/failures.",
+          "individually with automatic backoff if the rate limit is hit; returns a summary of successes/failures. " +
+          "Once imported, target them with ecw_create_automation (recurring) or ecw_create_campaign (one-time).",
         inputSchema: {
           members: z
             .array(z.object(memberFields))
